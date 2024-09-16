@@ -1,7 +1,7 @@
 package com.mjc.stage2.parser;
 
 import com.mjc.stage2.entity.AbstractTextComponent;
-import com.mjc.stage2.entity.TextComponent;
+import com.mjc.stage2.entity.SymbolLeaf;
 import com.mjc.stage2.entity.TextComponentType;
 
 public class LexemeParser extends AbstractTextParser{
@@ -10,13 +10,13 @@ public class LexemeParser extends AbstractTextParser{
 
     @Override
     public void parse(AbstractTextComponent abstractTextComponent, String string) {
-        String[] lexemes = string.split(LEXEME_REGEX);
-        for (String str: lexemes) {
-            if (str.matches(WORD_REGEX)) {
-                AbstractTextComponent wordComponent = new TextComponent(TextComponentType.WORD);
-                abstractTextComponent.add(wordComponent);
+        String[] lexemes = string.split("(?<=\\s)|(?=\\s)");
+        for (String lexeme : lexemes) {
+            if (lexeme.matches(LEXEME_REGEX)) {
+                abstractTextComponent.add(new SymbolLeaf(TextComponentType.SYMBOL, ' '));
+            } else if (lexeme.matches(WORD_REGEX)) {
                 if (nextParser != null) {
-                    nextParser.parse(wordComponent, str);
+                    nextParser.parse(abstractTextComponent, lexeme);
                 }
             }
         }
