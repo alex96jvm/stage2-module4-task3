@@ -13,8 +13,6 @@ public class LexemeParser extends AbstractTextParser{
     @Override
     public void parse(AbstractTextComponent abstractTextComponent, String string) {
         List<String> lexemes = List.of(string.split(LEXEME_REGEX));
-        lexemes.stream()
-                .filter(s -> s.matches(WORD_REGEX))
-                .forEach(s -> abstractTextComponent.add(new TextComponent(TextComponentType.SENTENCE)));
+        lexemes.forEach(s -> abstractTextComponent.add(new TextComponent(TextComponentType.SENTENCE)));
     }
 }
