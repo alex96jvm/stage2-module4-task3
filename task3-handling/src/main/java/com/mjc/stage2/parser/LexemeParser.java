@@ -14,7 +14,7 @@ public class LexemeParser extends AbstractTextParser{
         for (String lexeme : lexemes) {
             if (lexeme.matches(LEXEME_REGEX)) {
                 abstractTextComponent.add(new SymbolLeaf(TextComponentType.SYMBOL, ' '));
-            } else if (lexeme.matches(WORD_REGEX)) {
+            } else {
                 if (nextParser != null) {
                     nextParser.parse(abstractTextComponent, lexeme);
                 }
