@@ -15,7 +15,7 @@ public class TextComponent extends AbstractTextComponent{
     public String operation() {
         StringBuilder stringBuilder = new StringBuilder();
         componentList.forEach(textComponent -> stringBuilder.append(textComponent.operation()));
-        return stringBuilder.toString();
+        return stringBuilder.append(" ").toString();
     }
 
     @Override
