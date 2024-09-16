@@ -4,8 +4,6 @@ import com.mjc.stage2.entity.AbstractTextComponent;
 import com.mjc.stage2.entity.TextComponent;
 import com.mjc.stage2.entity.TextComponentType;
 
-import java.util.List;
-
 public class LexemeParser extends AbstractTextParser{
     private static final String LEXEME_REGEX = "\\s+";
     private static final String WORD_REGEX = "\\w[\\w!=?():]+";
@@ -13,9 +11,13 @@ public class LexemeParser extends AbstractTextParser{
     @Override
     public void parse(AbstractTextComponent abstractTextComponent, String string) {
         String[] lexemes = string.split(LEXEME_REGEX);
-        for (String s: lexemes) {
-            if (s.matches(WORD_REGEX)) {
-                abstractTextComponent.add(new TextComponent(TextComponentType.SENTENCE));
+        for (String str: lexemes) {
+            if (str.matches(WORD_REGEX)) {
+                AbstractTextComponent wordComponent = new TextComponent(TextComponentType.WORD);
+                abstractTextComponent.add(wordComponent);
+                if (nextParser != null) {
+                    nextParser.parse(wordComponent, str);
+                }
             }
         }
     }
